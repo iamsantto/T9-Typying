@@ -33,6 +33,7 @@ var btnPress = function (btn) {
 
 var t9 = function(btn) {
   var recent = '';
+  
   var longPress = false;
   var pressDuration = mouseUpTime - mouseDwnTime;
   pressDuration > 500 ? longPress = true : longPress = false;
@@ -48,7 +49,6 @@ var t9 = function(btn) {
     pressCounter = 0;
     result = result + variableChar;
     variableChar = '';
-    // timedOutChar =
   }
 
   for (key in alphabets) {
