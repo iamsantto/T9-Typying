@@ -2,6 +2,7 @@ var startTime = new Date().getTime();
 var pressCounter = 0;
 var lastPressed = '';
 var result = '';
+var variableChar = '';
 var alphabets = {
   1:['.',',','!'],
   2:['a','b','c'],
@@ -17,6 +18,7 @@ var alphabets = {
   '#':['#']
 }
 
+
 var mouseDwn = function(btn){
   mouseDwnTime = new Date().getTime();
 }
@@ -25,8 +27,11 @@ var mouseUp = function(btn){
   mouseUpTime = new Date().getTime();
 }
 
+var btnPress = function (btn) {
+  $("#result").val(t9(btn));
+}
 
-var btnPress = function(btn) {
+var t9 = function(btn) {
   var recent = '';
   var longPress = false;
   var pressDuration = mouseUpTime - mouseDwnTime;
@@ -38,31 +43,47 @@ var btnPress = function(btn) {
   timeGap > 1000 ? pause = true : pause = false;
   startTime = currentTime;
 
-  if (lastPressed != btn) pressCounter = 0;
+
+  if (lastPressed != btn) {
+    pressCounter = 0;
+    result = result + variableChar;
+    variableChar = '';
+    // timedOutChar =
+  }
 
   for (key in alphabets) {
     if (btn == key) {
       if (longPress) recent=key;
       else if (pause){
-        recent = alphabets[key][0];
+        result = result + variableChar;
+        variableChar = '';
+        variableChar = alphabets[key][0];
         pressCounter = 1;
+        lastPressed = btn;
+        return (result + variableChar);
       } else {
         if (btn == 7 || btn == 9){
           pressCounter += 1;
           var index = (pressCounter % 4);
           index != 0 ? index -= 1 : index = 3;
-          recent = alphabets[key][index];
+          variableChar = alphabets[key][index];
+          lastPressed = btn;
+          return (result + variableChar);
+        } else if (btn == 0 || btn == '#' || btn == '*') {
+          recent = alphabets[key][0];
         } else {
           pressCounter += 1;
           var index = (pressCounter % 3);
           index != 0 ? index -= 1 : index = 2;
-          recent = alphabets[key][index];
+          variableChar = alphabets[key][index];
+          lastPressed = btn;
+          return (result + variableChar);
         }
       }
     }
   }
 
   lastPressed = btn;
-  result = recent;
-  $("#result").val(result);
+  result = result + recent;
+  return result;
 }
