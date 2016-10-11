@@ -1,3 +1,6 @@
+// Author : Santhosh T
+// Date : 11 OCT 2016
+
 var startTime = new Date().getTime();
 var pressCounter = 0;
 var lastPressed = '';
@@ -28,12 +31,12 @@ var mouseUp = function(btn){
 }
 
 var btnPress = function (btn) {
-  $("#result").val(t9(btn));
+  document.getElementById("result").value = t9(btn);
 }
 
 var t9 = function(btn) {
   var recent = '';
-  
+
   var longPress = false;
   var pressDuration = mouseUpTime - mouseDwnTime;
   pressDuration > 500 ? longPress = true : longPress = false;
